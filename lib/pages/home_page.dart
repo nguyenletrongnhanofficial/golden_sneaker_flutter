@@ -55,6 +55,7 @@ class _HomePageState extends State<HomePage>
   @override
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
+
     return Scaffold(
       backgroundColor: AppColor.colorWhite,
       body: Stack(
@@ -190,6 +191,7 @@ class _HomePageState extends State<HomePage>
 
   Widget buildCartContainer() {
     final Size size = MediaQuery.of(context).size;
+
     return Consumer<CartProvider>(
       builder: (context, cartData, child) => Container(
         height: 600,
