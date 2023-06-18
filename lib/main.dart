@@ -20,19 +20,10 @@ void main() async {
       ChangeNotifierProvider.value(value: ShoeProvider()),
       ChangeNotifierProvider.value(value: CartProvider())
     ],
-    child: const MyApp(),
-  ));
-}
-
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return const MaterialApp(
+    child: const MaterialApp(
       title: 'GOLDEN SNEAKER',
       home: HomePage(),
       debugShowCheckedModeBanner: false,
-    );
-  }
+    ),
+  ));
 }

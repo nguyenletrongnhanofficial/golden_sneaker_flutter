@@ -26,6 +26,7 @@ class _ListItemWidgetState extends State<ListItemShop> {
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       await Provider.of<CartProvider>(context, listen: false)
           .checkProduct(widget.shoe.id!);
+      // ignore: use_build_context_synchronously
       if (Provider.of<CartProvider>(context, listen: false).isExist) {
         setState(() {
           isAdd = true;

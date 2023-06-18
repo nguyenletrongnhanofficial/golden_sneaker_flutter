@@ -1,5 +1,4 @@
 import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '/values/app_color.dart';
@@ -63,124 +62,47 @@ class ListItemCart extends StatelessWidget {
               Text(
                 cart.name!,
                 style: const TextStyle(
-                    fontSize: 14,
-                    fontFamily: 'Rubik-Bold',
-                    color: AppColor.colorBlack),
+                  fontSize: 14,
+                  fontFamily: 'Rubik-Bold',
+                  color: AppColor.colorBlack,
+                ),
               ),
               const SizedBox(height: 10),
               Text(
                 '\$$formattedPrice',
                 style: const TextStyle(
-                    fontSize: 20,
-                    fontFamily: 'Rubik-Bold',
-                    color: AppColor.colorBlack),
+                  fontSize: 20,
+                  fontFamily: 'Rubik-Bold',
+                  color: AppColor.colorBlack,
+                ),
               ),
               const SizedBox(height: 10),
               Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  InkWell(
-                    onTap: () {
-                      if (cart.number == 1) {
-                        cartProvider.removeShoeInCart(index).whenComplete(() {
-                          cartProvider.getAllShoeInCart();
-                        });
-                      } else {
-                        cartProvider
-                            .updateShoeInCart(
-                              Cart(
-                                id: cart.id,
-                                image: cart.image,
-                                name: cart.name,
-                                number: cart.number! - 1,
-                                color: cart.color,
-                                price: cart.price,
-                              ),
-                              index,
-                            )
-                            .whenComplete(
-                                () => cartProvider.getAllShoeInCart());
-                      }
-                    },
-                    child: Container(
-                      width: 27,
-                      height: 27,
-                      decoration: const BoxDecoration(
-                        shape: BoxShape.circle,
-                        color: Color(0xFFeeeeee),
-                      ),
-                      child: Padding(
-                        padding: const EdgeInsets.all(9.0),
-                        child: Image.asset(
-                          'assets/images/minus.png',
-                        ),
-                      ),
+                  MinusButton(
+                    onTap: () => handleMinusButtonTap(context, cartProvider),
+                  ),
+                  const SizedBox(width: 15),
+                  Text(
+                    '${cart.number}',
+                    style: const TextStyle(
+                      fontSize: 14,
+                      fontFamily: 'Rubik-Light',
+                      color: AppColor.colorBlack,
                     ),
                   ),
-                  Padding(
-                    padding: const EdgeInsets.fromLTRB(15, 5, 15, 0),
-                    child: Text(
-                      '${cart.number}',
-                      style: const TextStyle(
-                          fontSize: 14,
-                          fontFamily: 'Rubik-Light',
-                          color: AppColor.colorBlack),
-                    ),
-                  ),
-                  InkWell(
-                    onTap: () {
-                      cartProvider
-                          .updateShoeInCart(
-                            Cart(
-                              id: cart.id,
-                              image: cart.image,
-                              name: cart.name,
-                              number: cart.number! + 1,
-                              color: cart.color,
-                              price: cart.price,
-                            ),
-                            index,
-                          )
-                          .whenComplete(() => cartProvider.getAllShoeInCart());
-                    },
-                    child: Container(
-                      width: 27,
-                      height: 27,
-                      decoration: const BoxDecoration(
-                        shape: BoxShape.circle,
-                        color: Color(0xFFeeeeee),
-                      ),
-                      child: Padding(
-                        padding: const EdgeInsets.all(9.0),
-                        child: Image.asset(
-                          'assets/images/plus.png',
-                        ),
-                      ),
-                    ),
+                  const SizedBox(width: 15),
+                  PlusButton(
+                    onTap: () => handlePlusButtonTap(context, cartProvider),
                   ),
                   Expanded(
                     child: Align(
                       alignment: Alignment.centerRight,
-                      child: InkWell(
-                        onTap: () {
-                          cartProvider.removeShoeInCart(index).whenComplete(() {
-                            cartProvider.getAllShoeInCart();
-                          });
-                        },
-                        child: Container(
-                          width: 27,
-                          height: 27,
-                          decoration: const BoxDecoration(
-                            shape: BoxShape.circle,
-                            color: AppColor.colorYellow,
-                          ),
-                          child: Padding(
-                            padding: const EdgeInsets.all(5.0),
-                            child: Image.asset(
-                              'assets/images/trash.png',
-                            ),
-                          ),
-                        ),
+                      child: RemoveButton(
+                        onTap: () =>
+                            handleRemoveButtonTap(context, cartProvider),
                       ),
                     ),
                   ),
@@ -190,6 +112,131 @@ class ListItemCart extends StatelessWidget {
           ),
         ),
       ],
+    );
+  }
+
+  void handleMinusButtonTap(BuildContext context, CartProvider cartProvider) {
+    if (cart.number == 1) {
+      cartProvider.removeShoeInCart(index).whenComplete(() {
+        cartProvider.getAllShoeInCart();
+      });
+    } else {
+      cartProvider
+          .updateShoeInCart(
+            Cart(
+              id: cart.id,
+              image: cart.image,
+              name: cart.name,
+              number: cart.number! - 1,
+              color: cart.color,
+              price: cart.price,
+            ),
+            index,
+          )
+          .whenComplete(() => cartProvider.getAllShoeInCart());
+    }
+  }
+
+  void handlePlusButtonTap(BuildContext context, CartProvider cartProvider) {
+    cartProvider
+        .updateShoeInCart(
+          Cart(
+            id: cart.id,
+            image: cart.image,
+            name: cart.name,
+            number: cart.number! + 1,
+            color: cart.color,
+            price: cart.price,
+          ),
+          index,
+        )
+        .whenComplete(() => cartProvider.getAllShoeInCart());
+  }
+
+  void handleRemoveButtonTap(BuildContext context, CartProvider cartProvider) {
+    cartProvider.removeShoeInCart(index).whenComplete(() {
+      cartProvider.getAllShoeInCart();
+    });
+  }
+}
+
+class MinusButton extends StatelessWidget {
+  final VoidCallback onTap;
+
+  const MinusButton({Key? key, required this.onTap}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return InkWell(
+      onTap: onTap,
+      child: Container(
+        width: 27,
+        height: 27,
+        decoration: const BoxDecoration(
+          shape: BoxShape.circle,
+          color: Color(0xFFeeeeee),
+        ),
+        child: Padding(
+          padding: const EdgeInsets.all(9.0),
+          child: Image.asset(
+            'assets/images/minus.png',
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class PlusButton extends StatelessWidget {
+  final VoidCallback onTap;
+
+  const PlusButton({Key? key, required this.onTap}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return InkWell(
+      onTap: onTap,
+      child: Container(
+        width: 27,
+        height: 27,
+        decoration: const BoxDecoration(
+          shape: BoxShape.circle,
+          color: Color(0xFFeeeeee),
+        ),
+        child: Padding(
+          padding: const EdgeInsets.all(9.0),
+          child: Image.asset(
+            'assets/images/plus.png',
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class RemoveButton extends StatelessWidget {
+  final VoidCallback onTap;
+
+  const RemoveButton({Key? key, required this.onTap}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return InkWell(
+      onTap: onTap,
+      child: Container(
+        width: 27,
+        height: 27,
+        decoration: const BoxDecoration(
+          shape: BoxShape.circle,
+          color: AppColor.colorYellow,
+        ),
+        child: Padding(
+          padding: const EdgeInsets.all(5.0),
+          child: Image.asset(
+            'assets/images/trash.png',
+          ),
+        ),
+      ),
     );
   }
 }
