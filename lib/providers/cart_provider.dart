@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import '/models/hives/cart.dart';
@@ -8,10 +10,15 @@ class CartProvider extends ChangeNotifier {
   List<Cart> get carts => _carts;
 
   bool isExist = false;
+  final StreamController<List<Cart>> _cartStreamController =
+      StreamController.broadcast();
+
+  Stream<List<Cart>> get cartStream => _cartStreamController.stream;
 
   getAllShoeInCart() async {
     var box = await Hive.openBox<Cart>('cartBox');
     _carts = box.values.toList();
+    _cartStreamController.add(_carts);
     notifyListeners();
   }
 
