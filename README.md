@@ -24,9 +24,9 @@ https://golden-sneaker-apis.onrender.com/shoes
 ```bash
 https://github.com/nguyenletrongnhanofficial/golden_sneaker_apis
 ```
-- Hmm... with render.com, if it's not used for a while, it will temporarily go offline until it's used again. So, I coded it in a way that if the program doesn't receive product data within 50 microseconds, it will retrieve the data I have stored within the program. I hope you will like my solution.
+- Hmm... with render.com, if it's not used for a while, it will temporarily go offline until it's used again. So, I coded it in a way that if the program doesn't receive product data within 50 microseconds, it will retrieve the data I have stored within the program. I hope you will like my solution😇.
 
-## Thank you
+## Thank you🙏
 
 Thank you for taking the time to review my internship project. I am truly grateful for the opportunity to challenge myself with this assignment. I am hopeful that we will have future opportunities to collaborate, and I am honored to be part of the company's team, dedicating my skills to our common objectives. I express my heartfelt appreciation to you.
 
