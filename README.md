@@ -9,7 +9,7 @@ This is an app with a beautiful interface and lively animation, allowing you to 
 
 ## Completed Requirements
 
-- Display all products in `Our Products` section (for products data please check from [Technical Requirements](#technical-requirements)):
+- Display all products in `Our Products` section:
   - Single product should have name, description, price, image and `Add To Cart` button.
   - User able to click on `Add To Cart` to add target product to their cart.
   - Added product doesn't have `Add To Cart` button anymore, it should have `Check Mark Icon (✓)` instead.
